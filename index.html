@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola Linda</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            background-color: #000033;
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                              radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                              radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 20px),
+                              radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+            background-size: 100px 100px, 200px 200px, 300px 300px, 400px 400px;
+            color: white;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+        }
+        .hidden {
+            display: none;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button, a {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover, a:hover {
+            background-color: #ddd;
+        }
+        .navigation {
+            margin-top: 20px;
+        }
+        .button-container {
+            display: flex;
+            align-items: center;
+        }
+        .button-container span {
+            margin: 0 10px;
+            font-size: 18px;
+        }
+        .song-list {
+            margin-top: 20px;
+        }
+        .song-button {
+            font-size: 20px;
+            padding: 15px 30px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="main-title">Hola Linda</h1>
+    <img src="https://i.postimg.cc/9QGXjHrt/5-FA8-E20-E-0455-4531-809-D-E15-BB2-BD1471.png" alt="Imagen">
+    
+    <div id="initial-buttons" class="buttons">
+        <h2>Hola linda, ¿cómo estás?</h2>
+        <button onclick="handleInitialResponse('bien')">Bien</button>
+        <button onclick="handleInitialResponse('mal')">Mal</button>
+    </div>
+
+    <div id="bien-response" class="buttons hidden">
+        <h2>Sabes, eso me alegra mucho, esto es algo básico pero me demore mucho jaja.</h2>
+        <div class="navigation">
+            <button onclick="showPrevious('initial-buttons')">Anterior</button>
+            <button onclick="showMainChoices()">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="mal-response" class="buttons hidden">
+        <h2>¿Por qué? ¿Te puedo ayudar en algo o quieres hablar?</h2>
+        <button onclick="showChatMessage()">Sí</button>
+        <button onclick="showMalNoResponse()">No</button>
+    </div>
+
+    <div id="mal-no-response" class="buttons hidden">
+        <h2>Ojalá habláramos como lo hacíamos para que te pudiera ayudar, pero igual sabes que siempre estaré para ti.</h2>
+        <div class="navigation">
+            <button onclick="showPrevious('mal-response')">Anterior</button>
+            <button onclick="showMainChoices()">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="chat-message" class="buttons hidden">
+        <h2>Hazmelo saber, porque tampoco supe poner para que te mandara a mi chat jaja.</h2>
+        <div class="navigation">
+            <button onclick="showPrevious('mal-response')">Anterior</button>
+            <button onclick="showMainChoices()">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="main-choices" class="buttons hidden">
+        <div class="button-container">
+            <button onclick="showTePuedoDecir()">Te puedo decir algo</button>
+            <span>o si prefieres escucharlo</span>
+            <button onclick="showSongTitles()">Escúchalo</button>
+        </div>
+    </div>
+
+    <div id="te-puedo-decir" class="buttons hidden">
+        <h2>Una vez leí esto y dije que solo se lo diría a una persona, y te lo diré a ti:</h2>
+        <p>Si no eres el amor de mi vida, diré que me equivoqué de vida, pero no de amor.</p>
+        <div class="navigation">
+            <button onclick="showPrevious('main-choices')">Anterior</button>
+            <button onclick="showNextMessage()">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="next-message" class="buttons hidden">
+        <h2>Es un poco tarde para esto porque ya casi no hablamos pero no podía dejar esto a la mitad, eres la mujer que todo el mundo quisiera en su vida.</h2>
+        <h2>Y en serio lo más bonito que me ha pasado aquí fue haber hablado contigo así haya sido poco tiempo.</h2>
+        <h2>Me gustaría viajar al pasado y cambiar lo malo que haya hecho para acabar con eso, pero tristemente así es la vida, solo de únicas oportunidades.</h2>
+        <div class="navigation">
+            <button onclick="showPrevious('te-puedo-decir')">Anterior</button>
+            <button onclick="showMainChoices()">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="song-titles" class="buttons hidden song-list">
+        <h2>No supe poner la canción pero te pondré los nombres:</h2>
+        <button class="song-button" onclick="showSongMessage()">PUT YOUR HEAD ON MY SHOULDER</button>
+        <button class="song-button" onclick="showSongMessage()">SOLO VERTE</button>
+        <button class="song-button" onclick="showSongMessage()">TENGO GANAS</button>
+        <div class="navigation">
+            <button onclick="showPrevious('main-choices')">Anterior</button>
+        </div>
+    </div>
+
+    <div id="song-message" class="buttons hidden">
+        <h2>Te mereces todas las canciones bonitas que existan.</h2>
+        <div class="navigation">
+            <button onclick="showPrevious('song-titles')">Anterior</button>
+        </div>
+    </div>
+
+    <script>
+        function handleInitialResponse(response) {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            if (response === 'bien') {
+                document.getElementById('bien-response').classList.remove('hidden');
+            } else {
+                document.getElementById('mal-response').classList.remove('hidden');
+            }
+        }
+
+        function showPrevious(sectionId) {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function showMainChoices() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('main-choices').classList.remove('hidden');
+        }
+
+        function showTePuedoDecir() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('te-puedo-decir').classList.remove('hidden');
+        }
+
+        function showNextMessage() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('next-message').classList.remove('hidden');
+        }
+
+        function showMalNoResponse() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('mal-no-response').classList.remove('hidden');
+        }
+
+        function showSongTitles() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('song-titles').classList.remove('hidden');
+        }
+
+        function showSongMessage() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('song-message').classList.remove('hidden');
+        }
+
+        function showChatMessage() {
+            document.querySelectorAll('.buttons').forEach(div => div.classList.add('hidden'));
+            document.getElementById('chat-message').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
