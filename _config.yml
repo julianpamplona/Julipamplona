@@ -1,0 +1,6 @@
+
+theme: jekyll-theme-primer
+
+sass:
+  style: expanded
+  paths: []
